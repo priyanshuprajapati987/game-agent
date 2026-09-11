@@ -1,16 +1,16 @@
 # Game Agent
 
-Generic Game Automation Agent - kisi bhi game ko automatically khelne ke liye Python-based agent.
+Generic Game Automation Agent - AI-powered agent jo kisi bhi game ko automatically khel sake. Single-player games ke liye.
 
 ## Features
 
-- **Screen Capture**: DXcam (240+ FPS) ya MSS for real-time screen capture
+- **AI-Powered**: LLM (GPT-4o) se screen samajhta hai aur decisions leta hai
+- **Auto-Learn**: Agent khud se seekhta hai kya kaam karta hai, kya nahi
+- **Multi-Agent**: Alag alag tasks ke liye parallel agents spawn kar sakte ho
+- **Screen Capture**: DXcam (240+ FPS) real-time capture
 - **Template Matching**: OpenCV-based UI element detection
-- **OCR**: Game text padhne ke liye PaddleOCR
-- **Input Control**: Human-like mouse/keyboard with pydirectinput
-- **State Machine**: FSM-based game logic
-- **Plugin System**: Har game ke liye alag plugin
-- **Emergency Stop**: Ctrl+C se agent turant ruke
+- **Human-Like**: Random delays aur clicks se detection avoid hota hai
+- **Emergency Stop**: Ctrl+C se sab agents ruk jayenge
 
 ## Installation
 
@@ -24,16 +24,74 @@ pip install -r requirements.txt
 # Interactive menu
 python main.py
 
-# Direct game selection
-python main.py --game 1          # Gas Station Simulator
-python main.py --game 2          # Minecraft
-python main.py --game 3          # Generic Game
+# Direct mode selection
+python main.py --mode rule    # Rule-based (no AI)
+python main.py --mode ai      # Single AI agent
+python main.py --mode multi   # Multi-agent mode
+python main.py --list         # List open windows
+```
 
-# List open windows
-python main.py --list
+## Modes
 
-# Specify window title
-python main.py --game 1 --window "My Game"
+### 1. Rule-Based Agent
+Traditional state machine - predefined rules se game khelta hai. AI ki zaroorat nahi.
+
+```bash
+python main.py --mode rule
+```
+
+### 2. AI Single Agent
+Ek AI agent jo screenshot leta hai, LLM se samajhta hai, aur action leta hai. Khud se seekhta hai.
+
+```bash
+python main.py --mode ai
+```
+
+**Setup API Key:**
+```bash
+# Option 1: Environment variable
+set OPENAI_API_KEY=sk-your-key-here
+
+# Option 2: .env file
+echo OPENAI_API_KEY=sk-your-key-here > .env
+```
+
+### 3. Multi-Agent Mode
+Multiple agents parallel me kaam karte hain. Har agent ka ek role hota hai:
+
+| Role | Description |
+|------|-------------|
+| scout | Game explore karta hai, info gather karta hai |
+| fighter | Combat situations handle karta hai |
+| farmer | Resources collect karta hai |
+| builder | Structures build karta hai |
+| crafter | Items craft karta hai |
+| explorer | Naye areas discover karta hai |
+
+```bash
+python main.py --mode multi
+```
+
+## Multi-Agent Commands
+
+| Command | Description |
+|---------|-------------|
+| `status` | Sab agents ki status dikhata hai |
+| `pause` | Sab agents ko pause karta hai |
+| `resume` | Sab agents ko resume karta hai |
+| `stop` | Sab agents ko stop karta hai |
+| `Ctrl+C` | Emergency stop |
+
+## Agent Roles & Team Example
+
+```bash
+# Team composition
+Scout: 1 agent
+Fighter: 2 agents
+Farmer: 1 agent
+Builder: 1 agent
+
+# Total: 5 agents running parallel
 ```
 
 ## Project Structure
@@ -45,53 +103,70 @@ game_agent/
 ├── core/
 │   ├── __init__.py
 │   ├── capture.py             # Screen capture (DXcam/mss)
-│   ├── vision.py              # Template matching + image analysis
+│   ├── vision.py              # Template matching (OpenCV)
 │   ├── ocr.py                 # Text extraction (PaddleOCR)
 │   ├── input_controller.py    # Mouse/keyboard control
 │   ├── window_manager.py      # Game window detection
-│   └── state_machine.py       # FSM engine
+│   ├── state_machine.py       # FSM engine
+│   ├── ai_agent.py            # AI-powered agent (LLM + Vision)
+│   └── multi_agent.py         # Multi-agent spawner
 ├── plugins/
 │   ├── base_plugin.py         # Plugin base class
-│   ├── gas_station_sim/       # Gas Station Simulator plugin
-│   ├── minecraft/             # Minecraft plugin
+│   ├── gas_station_sim/       # Gas Station Simulator
+│   ├── minecraft/             # Minecraft
 │   └── generic/               # Generic game plugin
 └── agents/                    # Agent strategies
 ```
 
-## Adding a New Game
+## How AI Agent Works
 
-1. `plugins/` me naya folder banao
-2. `config.yaml` banao (ROIs, states, actions define karo)
-3. `templates/` folder me UI elements ke screenshots daalo
-4. `plugin.py` me game logic likho
-5. `main.py` me plugin register karo
-
-## Config YAML Format
-
-```yaml
-game_name: "My Game"
-window:
-  title: "Game Window Title"
-capture:
-  method: "auto"
-vision:
-  confidence: 0.8
-input:
-  human_like: true
-rois:
-  health_bar: {x: 50, y: 50, w: 200, h: 30}
-states:
-  idle:
-    next: playing
-  playing:
-    next: game_over
 ```
+Screenshot → Analyze → LLM Decision → Execute Action → Learn
+    ↓           ↓           ↓              ↓           ↓
+  DXcam     Vision     GPT-4o         pydirect    Memory
+  240fps    Engine     Response       input       Update
+```
+
+1. **Screenshot** leta hai game ki (240 FPS)
+2. **Analyze** karta hai - templates, colors, UI elements
+3. **LLM** ko bhejta hai with screen analysis
+4. **Action** leta hai LLM se - click, key press, etc.
+5. **Execute** karta hai action game me
+6. **Learn** karta hai - kya successful raha, kya fail hua
+
+## Multi-Agent Architecture
+
+```
+         ┌─────────────┐
+         │   Spawner    │
+         │  (Manager)   │
+         └──────┬───────┘
+                │
+    ┌───────────┼───────────┐
+    │           │           │
+┌───▼───┐  ┌───▼───┐  ┌───▼───┐
+│ Scout │  │Fighter│  │Farmer │
+│ Agent │  │ Agent │  │ Agent │
+└───┬───┘  └───┬───┘  └───┬───┘
+    │           │           │
+    └───────────┼───────────┘
+                │
+         ┌──────▼──────┐
+         │  Game Window │
+         │  (Shared)    │
+         └─────────────┘
+```
+
+- Har agent alag role play karta hai
+- Same game window share karte hain
+- Parallel me kaam karte hain
+- Individual memory rakhte hain
 
 ## Safety
 
-- **Single-player games** ke liye safe hai
-- **Multiplayer me use mat karna** (cheating detect ho sakta hai)
-- Human-like delays aur random clicks anti-detection ke liye
+- **Single-player games** ke liye safe
+- **Multiplayer me use mat karna** (cheating)
+- Human-like delays se anti-detection
 - Emergency stop: `Ctrl+C`
 
 ## License
