@@ -1,0 +1,52 @@
+game_name: "Gas Station Simulator"
+
+window:
+  title: "Gas Station Simulator"
+  class_name: "UnityWndClass"
+
+capture:
+  method: "auto"
+  monitor: 0
+
+resolution:
+  reference: [1920, 1080]
+
+vision:
+  confidence: 0.8
+
+ocr:
+  lang: "en"
+
+input:
+  human_like: true
+  click_variance: 5
+  delay_mean: 0.15
+  delay_std: 0.05
+
+loop_delay: 0.1
+
+template_dir: "plugins/gas_station_sim/templates"
+
+rois:
+  money_display: {x: 50, y: 50, w: 200, h: 40}
+  fuel_gauge: {x: 800, y: 400, w: 300, h: 50}
+
+states:
+  idle:
+    next: serving_customer
+    actions: []
+  serving_customer:
+    next: pumping_gas
+    actions:
+      - type: find_customer
+      - type: click_customer
+  pumping_gas:
+    next: collecting_payment
+    actions:
+      - type: grab_pump
+      - type: hold_trigger
+  collecting_payment:
+    next: idle
+    actions:
+      - type: click_register
+      - type: collect_money

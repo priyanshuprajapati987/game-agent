@@ -1,0 +1,64 @@
+game_name: "Minecraft"
+
+window:
+  title: "Minecraft"
+  class_name: "GLFW0"
+
+capture:
+  method: "auto"
+  monitor: 0
+
+resolution:
+  reference: [1920, 1080]
+
+vision:
+  confidence: 0.75
+
+ocr:
+  lang: "en"
+
+input:
+  human_like: true
+  click_variance: 3
+  delay_mean: 0.1
+  delay_std: 0.03
+
+loop_delay: 0.05
+
+template_dir: "plugins/minecraft/templates"
+
+rois:
+  hotbar: {x: 610, y: 990, w: 700, h: 80}
+  health_bar: {x: 610, y: 960, w: 360, h: 20}
+  hunger_bar: {x: 950, y: 960, w: 360, h: 20}
+  crosshair: {x: 955, y: 535, w: 10, h: 10}
+
+states:
+  idle:
+    next: mining
+    actions: []
+  mining:
+    next: idle
+    actions:
+      - type: hold_left_click
+        duration: 0.5
+  walking:
+    next: idle
+    actions:
+      - type: hold_key
+        key: w
+        duration: 1
+  crafting:
+    next: idle
+    actions:
+      - type: press_key
+        key: e
+  combat:
+    next: idle
+    actions:
+      - type: click_center
+  food:
+    next: mining
+    actions:
+      - type: press_hotbar
+        slot: 1

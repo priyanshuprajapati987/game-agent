@@ -1,0 +1,55 @@
+game_name: "Generic Game"
+
+window:
+  title: ""
+  class_name: ""
+
+capture:
+  method: "auto"
+  monitor: 0
+
+resolution:
+  reference: [1920, 1080]
+
+vision:
+  confidence: 0.8
+
+ocr:
+  lang: "en"
+
+input:
+  human_like: true
+  click_variance: 5
+  delay_mean: 0.15
+  delay_std: 0.05
+
+loop_delay: 0.1
+
+template_dir: "plugins/generic/templates"
+
+rois: {}
+
+states:
+  idle:
+    next: menu
+    actions: []
+  menu:
+    next: playing
+    actions:
+      - type: find_template
+        template: play_button
+      - type: click
+  playing:
+    next: paused
+    actions: []
+  paused:
+    next: playing
+    actions:
+      - type: press_key
+        key: escape
+  game_over:
+    next: menu
+    actions:
+      - type: find_template
+        template: restart_button
+      - type: click
