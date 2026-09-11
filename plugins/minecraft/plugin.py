@@ -1,8 +1,8 @@
 from typing import Optional
 import time
 import random
-from ..base_plugin import BasePlugin
-from ...core.state_machine import State, Transition, StateType
+from plugins.base_plugin import BasePlugin
+from core.state_machine import State, Transition, StateType
 
 
 class MinecraftPlugin(BasePlugin):
