@@ -13,9 +13,6 @@ resolution:
 vision:
   confidence: 0.75
 
-ocr:
-  lang: "en"
-
 input:
   human_like: true
   click_variance: 5
@@ -29,401 +26,51 @@ template_dir: "plugins/gas_station_sim/templates"
 # ============================================
 # GAS STATION SIMULATOR - STEAM VERSION
 # App ID: 1149620
-# Developer: DRAGO entertainment
 # ============================================
 
 # ============================================
-# KEYBOARD CONTROLS (STEAM VERSION)
+# KEYBOARD CONTROLS
 # ============================================
 controls:
-  movement:
-    forward: "w"
-    backward: "s"
-    left: "a"
-    right: "d"
-    jump: "space"
-    sprint: "left_shift"
-  
-  interaction:
-    primary_action: "left_mouse"  # Interact, grab, pump
-    secondary_action: "right_mouse"  # Throw, secondary
-    tool_menu: "tab"
-    minigame_action: "left_shift"  # Speed up pumping
-    
-  ui:
-    confirm: "e"
-    cancel: "f"
-    inventory: "i"
-    pause: "escape"
-
-# ============================================
-# SCREEN REGIONS OF INTEREST (1920x1080)
-# ============================================
-rois:
-  # HUD Elements (Top Left)
-  money_display:
-    x: 50
-    y: 30
-    w: 250
-    h: 50
-    description: "Money counter - top left corner"
-    
-  dirt_meter:
-    x: 50
-    y: 90
-    w: 200
-    h: 30
-    description: "Floor cleanliness meter - shows how dirty floor is"
-    
-  popularity_bar:
-    x: 50
-    y: 130
-    w: 200
-    h: 25
-    description: "Station reputation/popularity level"
-
-  # Gas Pumping Area (Center)
-  pump_handle:
-    x: 850
-    y: 450
-    w: 100
-    h: 120
-    description: "Gas pump nozzle/handle to grab"
-    
-  pump_nozzle_area:
-    x: 800
-    y: 400
-    w: 200
-    h: 200
-    description: "Area where pump handle is located"
-    
-  fuel_gauge_car:
-    x: 700
-    y: 350
-    w: 150
-    h: 100
-    description: "Car's fuel tank indicator"
-    
-  pumping_speed_meter:
-    x: 860
-    y: 580
-    w: 120
-    h: 150
-    description: "Speed needle for pumping minigame - keep in green zone!"
-    
-  green_zone:
-    x: 880
-    y: 620
-    w: 80
-    h: 20
-    description: "Green zone on speed meter - perfect pumping speed"
-    
-  pumping_trigger:
-    x: 880
-    y: 700
-    w: 60
-    h: 80
-    description: "Pump trigger - hold left mouse to pump"
-
-  # Customer Cars
-  customer_car_1:
-    x: 650
-    y: 250
-    w: 500
-    h: 350
-    description: "First customer car at pump"
-    
-  customer_car_2:
-    x: 1100
-    y: 250
-    w: 500
-    h: 350
-    description: "Second customer car at pump"
-    
-  customer_indicator:
-    x: 1700
-    y: 100
-    w: 180
-    h: 180
-    description: "Customer waiting icon - shows if customer needs service"
-
-  # Register/Checkout (Inside Store)
-  register_screen:
-    x: 350
-    y: 350
-    w: 350
-    h: 300
-    description: "Cash register screen - scan items here"
-    
-  register_items:
-    x: 400
-    y: 400
-    w: 250
-    h: 200
-    description: "Items to scan on counter"
-    
-  register_total:
-    x: 450
-    y: 550
-    w: 150
-    h: 40
-    description: "Total amount due"
-    
-  payment_button:
-    x: 500
-    y: 620
-    w: 100
-    h: 50
-    description: "Take payment button"
-    
-  receipt_button:
-    x: 500
-    y: 680
-    w: 100
-    h: 50
-    description: "Give receipt button"
-
-  # Cleaning System
-  broom_location:
-    x: 150
-    y: 600
-    w: 80
-    h: 120
-    description: "Broom tool location"
-    
-  trash_can_1:
-    x: 250
-    y: 500
-    w: 70
-    h: 100
-    description: "First trash can inside store"
-    
-  trash_can_2:
-    x: 400
-    y: 500
-    w: 70
-    h: 100
-    description: "Second trash can"
-    
-  dumpster:
-    x: 50
-    y: 800
-    w: 150
-    h: 200
-    description: "Outside dumpster for trash bags"
-    
-  floor_dirt_areas:
-    - x: 300
-      y: 650
-      w: 400
-      h: 250
-    - x: 700
-      y: 650
-      w: 400
-      h: 250
-    description: "Areas where dirt accumulates"
-
-  # Workshop/Repairs
-  workshop_area:
-    x: 1200
-    y: 300
-    w: 600
-    h: 500
-    description: "Workshop area for car repairs"
-    
-  ramp_button:
-    x: 1150
-    y: 600
-    w: 80
-    h: 80
-    description: "Button to raise/lower repair ramp"
-    
-  car_on_ramp:
-    x: 1250
-    y: 350
-    w: 500
-    h: 400
-    description: "Car positioned on repair ramp"
-    
-  broken_part_highlight:
-    x: 1300
-    y: 400
-    w: 200
-    h: 200
-    description: "Red outline on broken car part"
-
-  # Warehouse/Deliveries
-  warehouse_door:
-    x: 100
-    y: 350
-    w: 200
-    h: 400
-    description: "Warehouse delivery door"
-    
-  delivery_truck:
-    x: 50
-    y: 300
-    w: 250
-    h: 250
-    description: "Delivery truck outside"
-    
-  delivery_box:
-    x: 150
-    y: 400
-    w: 100
-    h: 100
-    description: "Delivery boxes to unload"
-
-  # Dennis/Troublemaker
-  dennis_location:
-    x: 1400
-    y: 350
-    w: 150
-    h: 200
-    description: "Dennis the troublemaker - throw trash at him!"
-    
-  graffiti_on_wall:
-    x: 0
-    y: 0
-    w: 1920
-    h: 1080
-    description: "Graffiti spray painted on walls"
-
-  # Open/Closed Sign
-  open_close_sign:
-    x: 80
-    y: 250
-    w: 100
-    h: 120
-    description: "Station open/closed toggle sign"
-    
-  reset_button_big:
-    x: 130
-    y: 250
-    w: 60
-    h: 60
-    description: "BIG RED RESET BUTTON - fixes stuck cars/trucks"
-
-  # Computer/Management
-  computer_desk:
-    x: 1500
-    y: 450
-    w: 300
-    h: 250
-    description: "Management computer for ordering/employees"
-    
-  computer_screen:
-    x: 1520
-    y: 460
-    w: 260
-    h: 180
-    description: "Computer screen"
-    
-  employee_tab:
-    x: 1550
-    y: 500
-    w: 80
-    h: 30
-    description: "Employee management tab"
-    
-  order_tab:
-    x: 1650
-    y: 500
-    w: 80
-    h: 30
-    description: "Order supplies tab"
-    
-  hire_button:
-    x: 1600
-    y: 620
-    w: 100
-    h: 40
-    description: "Hire employee button"
-
-  # Phone/Notifications
-  phone_box:
-    x: 60
-    y: 550
-    w: 80
-    h: 120
-    description: "Phone for calls from uncle"
-    
-  email_notification:
-    x: 1850
-    y: 30
-    w: 40
-    h: 40
-    description: "Email notification icon"
-
-  # Car Wash (if unlocked)
-  car_wash_entrance:
-    x: 1600
-    y: 200
-    w: 200
-    h: 300
-    description: "Car wash entrance"
-
-  # Toilets (if unlocked)
-  toilet_area:
-    x: 200
-    y: 300
-    w: 150
-    h: 200
-    description: "Customer toilet area"
-
-# ============================================
-# PUMPING GAS MINIGAME DETAILS
-# ============================================
-pumping_minigame:
-  description: |
-    Gas pumping is a timing minigame:
-    1. Grab pump handle (left click)
-    2. Position at car fuel tank
-    3. Hold LEFT MOUSE to pump
-    4. Watch the SPEED NEEDLE
-    5. Keep needle in GREEN ZONE for perfect pumping
-    6. Use LEFT SHIFT to speed up (careful - overshoots!)
-    7. Release when tank is full
-    
-  speed_meter:
-    position: center_bottom
-    needle_range: 0-100
-    green_zone: 40-60  # Perfect speed
-    red_zone: 80-100  # Too fast - waste fuel
-    
-  tips:
-    - "TAP shift for small amounts"
-    - "Release BEFORE needle reaches target"
-    - "Needle overshoots after long holds"
-    - "Green zone = customer happy"
-    - "Red zone = wasted fuel, less money"
+  move_forward: "w"
+  move_backward: "s"
+  move_left: "a"
+  move_right: "d"
+  jump: "space"
+  sprint: "left_shift"
+  interact: "left_mouse"      # Grab, pump, click
+  throw: "right_mouse"        # Throw trash at Dennis
+  confirm: "e"
+  cancel: "f"
+  tool_menu: "tab"
+  speed_boost: "left_shift"   # Pump speed
 
 # ============================================
 # GAME STATES
 # ============================================
 states:
   idle:
-    description: "Looking around, no active task"
+    description: "No active task"
     priority: 0
     
-  customer_at_pump:
-    description: "Customer car waiting at gas pump"
+  customer_waiting:
+    description: "Customer at gas pump"
     priority: 10
     
   pumping_gas:
-    description: "Actively pumping gas into car"
+    description: "Filling car with gas"
     priority: 10
     
-  customer_at_register:
-    description: "Customer ready to pay"
+  customer_paying:
+    description: "Customer at register"
     priority: 9
     
-  at_register:
-    description: "Scanning items and taking payment"
+  taking_payment:
+    description: "Scanning items, taking money"
     priority: 9
     
-  car_in_workshop:
-    description: "Car needs repair on ramp"
+  car_repair:
+    description: "Car in workshop"
     priority: 8
     
   fixing_car:
@@ -431,113 +78,144 @@ states:
     priority: 8
     
   floor_dirty:
-    description: "Floor needs sweeping"
+    description: "Floor needs cleaning"
     priority: 6
     
   cleaning:
-    description: "Sweeping floor or emptying trash"
+    description: "Sweeping or emptying trash"
     priority: 6
     
-  dennis_active:
+  dennis_here:
     description: "Dennis spraying graffiti"
-    priority: 20  # HIGHEST - stop him!
+    priority: 20  # HIGHEST!
     
-  dealing_dennis:
-    description: "Chasing away Dennis"
+  chasing_dennis:
+    description: "Throwing trash at Dennis"
     priority: 20
     
-  delivery_arrived:
-    description: "Delivery truck at warehouse"
+  delivery_truck:
+    description: "Delivery arrived"
     priority: 7
     
-  receiving_delivery:
-    description: "Unloading delivery boxes"
+  unloading:
+    description: "Unloading boxes"
     priority: 7
     
-  fuel_low:
-    description: "Gas station fuel running low"
+  fuel_empty:
+    description: "Out of fuel"
     priority: 15
     
-  ordering_fuel:
-    description: "Using computer to order fuel"
+  ordering:
+    description: "Using computer"
     priority: 15
 
 # ============================================
-# PRIORITY SYSTEM
+# PRIORITY ORDER
 # ============================================
-priority_order:
-  - dennis_active: 20      # STOP DENNIS IMMEDIATELY
-  - fuel_low: 15            # Order fuel ASAP
-  - customer_at_pump: 10    # Serve customer
-  - pumping_gas: 10         # Finish pumping
-  - customer_at_register: 9 # Take payment
-  - at_register: 9          # Complete sale
-  - car_in_workshop: 8      # Fix car
-  - fixing_car: 8           # Complete repair
-  - delivery_arrived: 7     # Unload delivery
-  - receiving_delivery: 7   # Finish unloading
-  - floor_dirty: 6          # Clean floor
-  - cleaning: 6             # Finish cleaning
-  - idle: 0                 # Default
+priority:
+  - dennis_here: 20
+  - fuel_empty: 15
+  - customer_waiting: 10
+  - pumping_gas: 10
+  - customer_paying: 9
+  - taking_payment: 9
+  - car_repair: 8
+  - fixing_car: 8
+  - delivery_truck: 7
+  - unloading: 7
+  - floor_dirty: 6
+  - cleaning: 6
+  - idle: 0
 
 # ============================================
-# EMPLOYEE MANAGEMENT
+# TEMPLATES TO DETECT (screenshot se match karna)
 # ============================================
-employees:
-  max_count: 5
-  roles:
-    cashier: "Works at register"
-    pump_attendant: "Pumps gas for customers"
-    cleaner: "Cleans floor and empties trash"
-    mechanic: "Repairs cars in workshop"
-    
-  hiring:
-    cost: 500
-    daily_wage: 100
-    shift_hours: 8
-    
+# Sirf naam rakho - coordinates mat do
+# Agent khud screen pe dhundega
+
+templates:
+  # Customer Service
+  - customer_car
+  - customer_icon
+  - customer_arrow
+  
+  # Gas Pumping
+  - pump_handle
+  - pump_nozzle
+  - fuel_gauge
+  - speed_meter
+  - green_zone
+  
+  # Register
+  - register_screen
+  - register_items
+  - total_amount
+  - payment_button
+  - receipt
+  
+  # Cleaning
+  - broom
+  - trash_can
+  - trash_full
+  - dumpster
+  - dirty_floor
+  
+  # Workshop
+  - workshop
+  - ramp_button
+  - car_on_ramp
+  - broken_part
+  - repair_complete
+  
+  # Warehouse
+  - warehouse_door
+  - delivery_truck
+  - delivery_box
+  
+  # Dennis
+  - dennis
+  - graffiti
+  
+  # Management
+  - computer
+  - employee_tab
+  - order_tab
+  - hire_button
+  
+  # UI
+  - open_sign
+  - reset_button
+  - money_display
+  - dirt_meter
+  - email_icon
+
+# ============================================
+# PUMPING MINIGAME
+# ============================================
+pumping:
+  method: "timing"
+  steps:
+    - grab_handle: "Left click on pump"
+    - position_nozzle: "Click on car fuel tank"
+    - hold_trigger: "Hold Left Mouse"
+    - watch_speed: "Keep needle in green zone"
+    - speed_boost: "Tap Left Shift (careful!)"
+    - release: "Stop when tank full"
+  
   tips:
-    - "Pay employees before assigning tasks"
-    - "Assign same role to level up skills"
-    - "Need at least 2 cleaners"
-    - "Cashier and pump attendant are essential"
+    - "Tap shift for small amounts"
+    - "Release early - needle overshoots"
+    - "Green zone = perfect"
+    - "Red zone = waste fuel"
 
 # ============================================
-# GAME TIPS FOR AGENT
+# GAMEPLAY TIPS
 # ============================================
-gameplay_tips:
-  cleaning:
-    - "Desert sand tracks in constantly"
-    - "Dirty floor = lost customers"
-    - "Empty trash BEFORE green fumes"
-    - "Carry bags to dumpster outside"
-    
-  pumping:
-    - "Tap Shift for small fills"
-    - "Release early - needle overshoots"
-    - "Green zone = perfect service"
-    - "Red zone = wasted fuel"
-    
-  workshop:
-    - "Activate ramp first"
-    - "Scan for red-outlined parts"
-    - "Keep spare parts in stock"
-    - "Paint scratches with drag motion"
-    
-  dennis:
-    - "Appears randomly when busy"
-    - "Throw trash at him (right-click)"
-    - "Keep trash equipped nearby"
-    - "Ignore graffiti - it's cosmetic"
-    
-  warehouse:
-    - "CLOSE door after delivery"
-    - "Open door = items get stolen"
-    - "Order supplies in advance"
-    
-  general:
-    - "Close station for maintenance"
-    - "Use reset button for stuck vehicles"
-    - "Stock variety for more sales"
-    - "Party bus = stock everything!"
-    - "Uncle's debt timer = ignore it"
+tips:
+  - "Dennis = STOP EVERYTHING, throw trash"
+  - "Floor dirty = customers leave"
+  - "Empty trash before green fumes"
+  - "Close warehouse door after delivery"
+  - "Use reset button for stuck cars"
+  - "Stock variety = more sales"
+  - "Party bus = stock everything!"
