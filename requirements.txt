@@ -12,4 +12,8 @@ pygetwindow>=0.0.9
 pyyaml>=6.0
 rich>=13.0
 requests>=2.31
-openai>=1.0
+
+# Optional - for local LLM (pick one):
+# llama-cpp-python>=0.2.0    # For .gguf models
+# transformers>=4.35          # For HuggingFace models
+# torch>=2.0                  # Required by transformers

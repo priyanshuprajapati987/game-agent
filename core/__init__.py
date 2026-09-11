@@ -6,6 +6,7 @@ from .window_manager import WindowManager
 from .state_machine import StateMachine
 from .ai_agent import AIAgent, AgentRole, AgentTask
 from .multi_agent import MultiAgentSpawner
+from .offline_ai import OfflineAIEngine, ModelConfig
 
 __all__ = [
     "ScreenCapture",
@@ -18,4 +19,6 @@ __all__ = [
     "AgentRole",
     "AgentTask",
     "MultiAgentSpawner",
+    "OfflineAIEngine",
+    "ModelConfig",
 ]
